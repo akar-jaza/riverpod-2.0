@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final counterProvider = StateProvider((ref) => 0);
+final counterProvider = StateProvider.autoDispose((ref) => 0);
 
 void main() {
   runApp(
@@ -20,9 +20,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        useMaterial3: false,
         brightness: Brightness.dark,
         primarySwatch: Colors.blue,
         fontFamily: 'SF Sans',
+        splashFactory: NoSplash.splashFactory,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
       ),
       home: const HomePage(),
     );
@@ -67,6 +71,14 @@ class CounterPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Counter'),
+        actions: [
+          CupertinoButton(
+            onPressed: (() {
+              ref.invalidate(counterProvider);
+            }),
+            child: const Icon(CupertinoIcons.refresh),
+          )
+        ],
       ),
       body: Center(
         child: Text(
