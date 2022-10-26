@@ -58,24 +58,27 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class CounterPage extends StatelessWidget {
+class CounterPage extends ConsumerWidget {
   const CounterPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final int counter = ref.watch(counterProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Counter'),
       ),
       body: Center(
         child: Text(
-          '0',
+          counter.toString(),
           style: Theme.of(context).textTheme.displayMedium,
         ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: CupertinoColors.activeGreen,
-        onPressed: () {},
+        onPressed: () {
+          ref.read(counterProvider.notifier).state++;
+        },
         child: const Icon(
           CupertinoIcons.add,
           color: Colors.black,
