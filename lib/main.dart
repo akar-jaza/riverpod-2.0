@@ -75,6 +75,7 @@ class CounterPage extends ConsumerWidget {
           CupertinoButton(
             onPressed: (() {
               ref.invalidate(counterProvider);
+              // refresh'esh abet ballam invalidate more Optimize'a
             }),
             child: const Icon(CupertinoIcons.refresh),
           )
